@@ -19,9 +19,9 @@ class FailurePage extends StatefulWidget {
 }
 
 class _FailurePageState extends State<FailurePage> {
-  int _remainingTime = 0; // الوقت المتبقي
-  bool _timerInProgress = false; // حالة المؤقت
-  Timer? _timer; // المؤقت
+  int _remainingTime = 0;
+  bool _timerInProgress = false;
+  Timer? _timer;
 
   void _startExtendedTimer(int initialTime) {
     setState(() {
@@ -37,7 +37,7 @@ class _FailurePageState extends State<FailurePage> {
         } else {
           _timer?.cancel();
           _timerInProgress = false;
-          _showCompletionDialog(); // عرض مربع حوار بعد انتهاء الوقت
+          _showCompletionDialog();
         }
       });
     });
@@ -48,52 +48,29 @@ class _FailurePageState extends State<FailurePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(
-            'Did you complete the task?',
-            style:
-                TextStyle(color: Colors.black), // لون النص الأسود في الدايلوج
-          ),
-          content: Text(
-            'Did you finish the task successfully?',
-            style:
-                TextStyle(color: Colors.black), // لون النص الأسود في الدايلوج
-          ),
+          title: Text('Did you complete the task?'),
+          content: Text('Did you finish the task successfully?'),
           actions: [
             TextButton(
               onPressed: () {
+                setState(() {
+                  widget.currentTask.isCompleted = true;
+                });
+                _timer?.cancel(); // إيقاف المؤقت قبل مغادرة الصفحة
                 Navigator.pop(context);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TaskManagementPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => TaskManagementPage()),
                 );
-                widget.currentTask.isCompleted =
-                    true; // وضع علامة خضراء على المهمة
               },
-              child: Text(
-                'Yes',
-                style: TextStyle(color: Colors.red), // لون النص أحمر
-              ),
+              child: Text('Yes', style: TextStyle(color: Colors.green)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FailurePage(
-                      onExtendTime: widget.onExtendTime,
-                      onPostponeTask: widget.onPostponeTask,
-                      currentTask: widget.currentTask,
-                    ),
-                  ),
-                );
+                setState(() {}); // إعادة بناء الصفحة نفسها دون إنشائها من جديد
               },
-              child: Text(
-                'No',
-                style: TextStyle(color: Colors.red), // لون النص أحمر
-              ),
+              child: Text('No', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -103,7 +80,7 @@ class _FailurePageState extends State<FailurePage> {
 
   @override
   void dispose() {
-    _timer?.cancel(); // إلغاء المؤقت عند إزالة الصفحة
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -111,95 +88,67 @@ class _FailurePageState extends State<FailurePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Task Incomplete',
-          style: TextStyle(color: Colors.white), // لون النص أبيض
-        ),
-        backgroundColor: Colors.red[900], // لون الشريط العلوي أحمر داكن
+        title: Text('Task Incomplete', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red[900],
       ),
-      backgroundColor: Colors.red, // لون خلفية الصفحة أحمر
+      backgroundColor: Colors.red,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 100,
-              color: Colors.white, // لون الأيقونة أبيض
-            ),
+            Icon(Icons.error_outline, size: 100, color: Colors.white),
             SizedBox(height: 20),
             Text(
               'You couldn\'t complete the task on time.',
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white, // لون النص أبيض
-              ),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             SizedBox(height: 20),
             if (_timerInProgress)
               Column(
                 children: [
                   Text(
-                    'Remaining Time: ${_remainingTime ~/ 60} minutes ${_remainingTime % 60} seconds',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white, // لون النص أبيض
-                    ),
+                    'Remaining Time: ${Duration(seconds: _remainingTime).inMinutes} min '
+                    '${_remainingTime % 60} sec',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   SizedBox(height: 20),
                 ],
               ),
             ElevatedButton(
               onPressed: () {
-                widget.onExtendTime(); // تمديد الوقت
-                _startExtendedTimer(widget.currentTask.timeInSeconds ~/
-                    3); // بدء مؤقت بثلث الوقت
+                widget.onExtendTime();
+                _startExtendedTimer(widget.currentTask.timeInSeconds ~/ 3);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white, // لون خلفية الزر أبيض
-              ),
-              child: Text(
-                'Extend Time',
-                style: TextStyle(color: Colors.red), // لون النص أحمر
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+              child: Text('Extend Time', style: TextStyle(color: Colors.red)),
             ),
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                widget.onPostponeTask(); // تأجيل المهمة
+                widget.onPostponeTask();
+                _timer?.cancel(); // إيقاف المؤقت عند مغادرة الصفحة
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TaskManagementPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => TaskManagementPage()),
                 );
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white, // لون خلفية الزر أبيض
-              ),
-              child: Text(
-                'Postpone Task',
-                style: TextStyle(color: Colors.red), // لون النص أحمر
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+              child: Text('Postpone Task', style: TextStyle(color: Colors.red)),
             ),
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
+                _timer?.cancel(); // إيقاف المؤقت عند مغادرة الصفحة
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TaskManagementPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => TaskManagementPage()),
                 );
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white, // لون خلفية الزر أبيض
-              ),
-              child: Text(
-                'Back to Tasks',
-                style: TextStyle(color: Colors.red), // لون النص أحمر
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+              child: Text('Back to Tasks', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),

@@ -1,0 +1,2 @@
+/home/caesar/Documents/DTApp/dtapp/android/app/.cxx/Debug/53y463w6/x86/CMakeFiles/edit_cache.dir
+/home/caesar/Documents/DTApp/dtapp/android/app/.cxx/Debug/53y463w6/x86/CMakeFiles/rebuild_cache.dir

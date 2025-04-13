@@ -35,7 +35,7 @@ class _StatusPageState extends State<StatusPage> {
         title: Text('Status Page'),
         backgroundColor: Colors.deepPurple,
       ),
-      backgroundColor: Colors.deepPurple, // تغيير لون الخلفية إلى deepPurple
+      backgroundColor: Colors.deepPurple,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -46,7 +46,7 @@ class _StatusPageState extends State<StatusPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white, // تغيير لون النص إلى الأبيض
+                color: Colors.white,
               ),
             ),
             SizedBox(height: 20),
@@ -54,7 +54,7 @@ class _StatusPageState extends State<StatusPage> {
               'Are you feeling good today?',
               style: TextStyle(
                 fontSize: 18,
-                color: Colors.white, // تغيير لون النص إلى الأبيض
+                color: Colors.white,
               ),
             ),
             SizedBox(height: 20),
@@ -64,7 +64,7 @@ class _StatusPageState extends State<StatusPage> {
                 ElevatedButton(
                   onPressed: () => _navigateToResponse('Good'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // لون الخلفية أبيض
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -72,15 +72,14 @@ class _StatusPageState extends State<StatusPage> {
                   ),
                   child: Text(
                     'Good',
-                    style:
-                        TextStyle(color: Colors.deepPurple), // لون النص بنفسجي
+                    style: TextStyle(color: Colors.deepPurple),
                   ),
                 ),
                 SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () => _navigateToResponse('Not Good'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // لون الخلفية أبيض
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -88,8 +87,7 @@ class _StatusPageState extends State<StatusPage> {
                   ),
                   child: Text(
                     'Not Good',
-                    style:
-                        TextStyle(color: Colors.deepPurple), // لون النص بنفسجي
+                    style: TextStyle(color: Colors.deepPurple),
                   ),
                 ),
               ],

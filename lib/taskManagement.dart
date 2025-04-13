@@ -387,7 +387,7 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Text('Add New Task'),
+              child: Text('ADD NEW TASK'),
             ),
             SizedBox(height: 20),
             Expanded(
@@ -395,10 +395,8 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   final task = tasks[index];
-                  final progress = (_remainingTime /
-                      task.timeInSeconds); // حساب النسبة المتبقية
-                  final color = Color.lerp(Colors.red, Colors.green,
-                      progress)!; // تغيير اللون بناءً على النسبة
+                  final progress = (_remainingTime / task.timeInSeconds);
+                  final color = Color.lerp(Colors.red, Colors.green, progress)!;
 
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: 5),
@@ -439,10 +437,10 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
                               width: 50,
                               height: 50,
                               child: CircularProgressIndicator(
-                                value: progress, // النسبة المتبقية
+                                value: progress,
                                 backgroundColor: Colors.grey[300],
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    color), // اللون المتحول
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(color),
                                 strokeWidth: 5,
                               ),
                             )

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'taskManagement.dart';
 
 class FinalPage extends StatelessWidget {
   const FinalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle textStyle = TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: Colors.green,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Daily Goal Achieved!'),
@@ -17,11 +22,7 @@ class FinalPage extends StatelessWidget {
           children: [
             Text(
               'You have completed all your tasks for today!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
-              ),
+              style: textStyle,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
@@ -33,10 +34,7 @@ class FinalPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => TaskManagementPage()),
-                );
+                Navigator.pop(context); // الرجوع إلى الصفحة السابقة
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -47,6 +45,21 @@ class FinalPage extends StatelessWidget {
                 ),
               ),
               child: Text('Back to Tasks'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // الخروج من التطبيق
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text('Exit'),
             ),
           ],
         ),
