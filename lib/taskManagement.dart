@@ -48,6 +48,7 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
 
   void _startTimer(Task task) {
     if (!mounted) return;
+    _timer?.cancel();
     setState(() {
       _taskInProgress = true;
       _currentTask = task;
@@ -95,6 +96,7 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
 
   void _postponeTask() {
     if (_currentTask != null && mounted) {
+      _timer?.cancel();
       setState(() {
         _currentTask!.isPostponed = true;
         _taskInProgress = false;
@@ -122,19 +124,19 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
                     });
                   }
                   if (tasks.every((task) => task.isCompleted)) {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => FinalPage()),
                     );
                   } else if (tasks
                       .any((task) => !task.isCompleted && !task.isPostponed)) {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => TaskManagementPage()),
                     );
                   } else {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SuccessPage()),
                     );
@@ -150,7 +152,7 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
                       _currentTask?.isPostponed = true;
                     });
                   }
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => FailurePage(
@@ -230,9 +232,7 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: Text('Cancel', style: TextStyle(color: Colors.white)),
             ),
             TextButton(
@@ -314,14 +314,12 @@ class _TaskManagementPageState extends State<TaskManagementPage> {
                 ),
                 keyboardType: TextInputType.number,
                 style: TextStyle(color: Colors.white),
-              ),
+              )
             ],
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: Text('Cancel', style: TextStyle(color: Colors.white)),
             ),
             TextButton(
